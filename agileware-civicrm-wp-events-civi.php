@@ -1,9 +1,6 @@
 <?php
 
 // Hook into CiviCRM.
-add_action('civicrm_post', 'agileware_civicrm_wp_events_create', 10, 4);
-add_action('civicrm_post', 'agileware_civicrm_wp_events_update', 10, 4);
-add_action('civicrm_post', 'agileware_civicrm_wp_events_delete', 10, 4);
 
 function agileware_civicrm_wp_events_create($op, $objectName, $objectId, $objectRef) {
   if ($op != 'create') {
@@ -33,9 +30,9 @@ function agileware_civicrm_wp_events_update($op, $objectName, $objectId, $object
   }
   $event_id = $objectRef->id;
   $event_posts = get_posts(array(
-    'post_type'   => 'event',
+    'post_type'   => 'aa-event',
     'post_status' => 'publish,draft',
-    'meta_key'    => 'events_mb_id',
+    'meta_key'    => 'aa-event-id',
     'meta_value'  => $event_id,
   ));
   error_log(print_r($event_posts, true));
@@ -76,8 +73,8 @@ function agileware_civicrm_wp_events_insert_type($event_type_id) {
   // Insert the term if it does not already exist.
   if (empty($type_result['is_error'])) {
     $type_name = $type_result['name'];
-    if (!term_exists($type_name, 'events_type')) {
-      wp_insert_term($type_name, 'events_type');
+    if (!term_exists($type_name, 'aa-event-type')) {
+      wp_insert_term($type_name, 'aa-event-type');
     }
     return $type_name;
   }
@@ -96,8 +93,8 @@ function agileware_civicrm_wp_events_insert_location($event_id) {
     ));
     if (empty($address_result['is_error'])) {
       $city = $address_result['city'];
-      if (!term_exists($city, 'events_location')) {
-        wp_insert_term($city, 'events_location');
+      if (!term_exists($city, 'aa-event-location')) {
+        wp_insert_term($city, 'aa-event-location');
       }
       return $city;
     }
@@ -120,18 +117,18 @@ function agileware_civicrm_wp_events_make_postarray($event) {
   $postarr = array(
     'post_title'   => $title,
     'post_content' => '[civicrm component="event" id="' . $event_id . '" action="info" mode="live" hijack="1"]',
-    'post_type' => 'event',
+    'post_type' => 'aa-event',
     'post_status' => $is_active ? 'publish' : 'draft',
     'tax_input' => array(
-      'events_type' => array($type_name),
-      'events_location' => array($city),
+      'aa-event-type' => array($type_name),
+      'aa-event-location' => array($city),
     ),
     'meta_input' => array(
-       'events_mb_id'      => $event_id,
-       'events_mb_start'   => $start_date,
-       'events_mb_end'     => $end_date,
-       'events_mb_summary' => $summary,
-       'events_mb_public'  => ($is_public ? 'on' : ''),
+       'aa-event-id'      => $event_id,
+       'aa-event-start'   => $start_date,
+       'aa-event-end'     => $end_date,
+       'aa-event-summary' => $summary,
+       'aa-event-public'  => ($is_public ? 'on' : ''),
     ),
   );
   return $postarr;

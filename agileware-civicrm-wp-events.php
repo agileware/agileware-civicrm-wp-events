@@ -37,19 +37,20 @@ function agileware_civicrm_wp_events_init() {
 }
 
 function agileware_civicrm_wp_events_create_post_type() {
-  register_post_type('event', array(
+  register_post_type('aa-event', array(
     'labels' => array(
       'name' => __('Events'),
       'singular_name' => __('Event'),
     ),
     'public' => true,
-    'has_archive' => false,
+    'has_archive' => true,
+    'show_ui' => true,
     'rewrite' => array('slug' => 'events'),
   ));
 }
 
 function agileware_civicrm_wp_events_register_taxonomies() {
-  register_taxonomy('events_type', array('event'), array(
+  register_taxonomy('aa-event-type', array('aa-event'), array(
     'labels' => array(
       'name' => __('Event Types'),
       'singular_name' => __('Event Type'),
@@ -58,7 +59,7 @@ function agileware_civicrm_wp_events_register_taxonomies() {
     'hierarchical' => false,
     'rewrite' => array('slug' => 'type'),
   ));
-  register_taxonomy('events_location', array('event'), array(
+  register_taxonomy('aa-event-location', array('aa-event'), array(
     'labels' => array(
       'name' => __('Event Locations'),
       'singular_name' => __('Event Location'),
