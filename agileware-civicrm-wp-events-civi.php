@@ -117,7 +117,7 @@ function agileware_civicrm_wp_events_make_postarray($event) {
   $event_id   = $event->id;
   $summary    = $event->summary;
   $start_date = $event->start_date;
-  $end_date   = $event->start_date;
+  $end_date   = $event->end_date;
   $is_active  = $event->is_active;
   $is_public  = $event->is_public;
   $type_id    = $event->event_type_id;
@@ -143,5 +143,6 @@ function agileware_civicrm_wp_events_make_postarray($event) {
        'aa-event-public'  => ($is_public ? 'on' : ''),
     ),
   );
+  error_log(print_r($postarr, true));
   return $postarr;
 }
