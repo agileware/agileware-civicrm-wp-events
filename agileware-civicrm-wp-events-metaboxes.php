@@ -58,8 +58,16 @@ function _agileware_civicrm_wp_aa_event_civicrm() {
 function _agileware_civicrm_wp_aa_event_time() {
   global $post;
   $custom = get_post_custom($post->ID);
+  if (empty($custom)) {
+    $curr_time = date('YmdHis');
+    $mb_start = $curr_time;
+    $mb_end = $curr_time;
+  }
+  else {
+    $mb_start = $custom['aa-event-start'][0];
+    $mb_end = $custom['aa-event-end'][0];
+  }
 
-  $mb_start = $custom['aa-event-start'][0];
   $time_start = strtotime($mb_start);
   $yy_start = date('Y', $time_start);
   $mm_start = date('m', $time_start);
@@ -68,7 +76,6 @@ function _agileware_civicrm_wp_aa_event_time() {
   $mn_start = date('i', $time_start);
   $ss_start = date('s', $time_start);
 
-  $mb_end = $custom['aa-event-end'][0];
   $time_end = strtotime($mb_end);
   $yy_end = date('Y', $time_end);
   $mm_end = date('m', $time_end);
