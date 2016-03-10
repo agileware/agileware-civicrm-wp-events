@@ -131,6 +131,7 @@ function agileware_civicrm_wp_events_make_postarray($event) {
     'post_content' => '[civicrm component="event" id="' . $event_id . '" action="info" mode="live" hijack="1"]',
     'post_type' => 'aa-event',
     'post_status' => $is_active ? 'publish' : 'draft',
+    'post_excerpt' => $summary,
     'tax_input' => array(
       'aa-event-type' => array($type_name),
       'aa-event-location' => array($city),
@@ -139,7 +140,6 @@ function agileware_civicrm_wp_events_make_postarray($event) {
        'aa-event-id'      => $event_id,
        'aa-event-start'   => $start_date,
        'aa-event-end'     => $end_date,
-       'aa-event-summary' => $summary,
        'aa-event-public'  => ($is_public ? 'on' : ''),
     ),
   );

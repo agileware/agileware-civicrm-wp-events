@@ -6,7 +6,6 @@ function agileware_civicrm_wp_events_admin_init() {
 
 function agileware_civicrm_wp_events_add_meta_boxes(){
   add_meta_box('aa-event-time',    'Event Time',    '_agileware_civicrm_wp_aa_event_time',    'aa-event', 'normal');
-  add_meta_box('aa-event-summary', 'Event Summary', '_agileware_civicrm_wp_aa_event_summary', 'aa-event', 'normal');
   add_meta_box('aa-event-civicrm', 'CiviCRM Event', '_agileware_civicrm_wp_aa_event_civicrm', 'aa-event', 'side');
 }
 
@@ -32,7 +31,6 @@ function agileware_civicrm_wp_events_save_post(){
   $aa_event_end = $yy_e . $mm_e . $dd_e . $hh_e . $mn_e . $ss_e;
   update_post_meta($post_id, 'aa-event-end', $aa_event_end);
 
-  update_post_meta($post_id, 'aa-event-summary', $_POST['aa-event-summary']);
   update_post_meta($post_id, 'aa-event-public',  $_POST['aa-event-public']);
   update_post_meta($post_id, 'aa-event-id',      $_POST['aa-event-id']);
 }
@@ -167,19 +165,6 @@ function _agileware_civicrm_wp_aa_event_time() {
         </label>
       </p>
       <p id="aa-event-time-help">Event start and end times.</p>
-    </div>
-  <?php
-}
-
-function _agileware_civicrm_wp_aa_event_summary() {
-  global $post;
-  $custom = get_post_custom($post->ID);
-  $mb_summary = $custom['aa-event-summary'][0];
-  ?>
-    <div class="wrap">
-      <label class="screen-reader-text" for="aa-event-summary">Summary</label>
-      <textarea rows="1" cols="40" name="aa-event-summary" id="aa-event-summary"><?php echo $mb_summary; ?></textarea>
-      <p id="aa-event-summary-help">A summary of the event.</p>
     </div>
   <?php
 }
