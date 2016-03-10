@@ -35,7 +35,6 @@ function agileware_civicrm_wp_events_update($op, $objectName, $objectId, $object
     'meta_key'    => 'aa-event-id',
     'meta_value'  => $event_id,
   ));
-  error_log(print_r($event_posts, true));
   if (empty($event_posts)) {
     // The corresponding event post has not been created.
     $post_id = 0;
@@ -57,12 +56,22 @@ function agileware_civicrm_wp_events_delete($op, $objectName, $objectId, $object
     return;
   }
   civicrm_initialize();
-  error_log(print_r(array(
-  'op' => $op,
-  'objectName' => $objectName,
-  'objectId' => $objectId,
-  //'objectRef' => $objectRef
-  ), true));
+  if (!$objectRef instanceof CRM_Event_DAO_Event) {
+    return;
+  }
+  $event_id = $objectRef->id;
+  $event_posts = get_posts(array(
+    'post_type'   => 'aa-event',
+    'post_status' => 'publish,draft',
+    'meta_key'    => 'aa-event-id',
+    'meta_value'  => $event_id,
+  ));
+  if (!empty($event_posts)) {
+    // The corresponding event post has not been created.
+    $my_post = $event_posts[0];
+    $post_id = $my_post->ID;
+    wp_delete_post($post_id, true);
+  }
 }
 
 function agileware_civicrm_wp_events_insert_type($event_type_id) {
