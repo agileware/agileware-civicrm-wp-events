@@ -75,6 +75,9 @@ function agileware_civicrm_wp_events_delete($op, $objectName, $objectId, $object
 }
 
 function agileware_civicrm_wp_events_insert_type($event_type_id) {
+  if (empty($event_type_id)) {
+    return;
+  }
   $type_result = civicrm_api3('OptionValue', 'getsingle', array(
     'option_group_id' => 'event_type',
     'value' => $event_type_id,
@@ -95,7 +98,7 @@ function agileware_civicrm_wp_events_insert_location($event_id) {
     'id' => $event_id,
     'api.LocBlock.getsingle' => array(),
   ));
-  if (empty($chained_loc_result['is_error'])) {
+  if (empty($chained_loc_result['api.LocBlock.getsingle']['is_error'])) {
     $address_id = $chained_loc_result['api.LocBlock.getsingle']['address_id'];
     $address_result = civicrm_api3('Address', 'getsingle', array(
       'id' => $address_id,
