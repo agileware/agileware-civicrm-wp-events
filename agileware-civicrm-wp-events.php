@@ -31,6 +31,8 @@ add_action('civicrm_post', 'agileware_civicrm_wp_events_create', 10, 4);
 add_action('civicrm_post', 'agileware_civicrm_wp_events_update', 10, 4);
 add_action('civicrm_post', 'agileware_civicrm_wp_events_delete', 10, 4);
 
+wp_enqueue_style('agileware_civicrm_wp_events_css', plugins_url('agileware-civicrm-wp-events.css', __FILE__));
+
 function agileware_civicrm_wp_events_init() {
   agileware_civicrm_wp_events_create_post_type();
   agileware_civicrm_wp_events_register_taxonomies();
