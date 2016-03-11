@@ -13,7 +13,7 @@ function agileware_civicrm_wp_events_create($op, $objectName, $objectId, $object
   if (!$objectRef instanceof CRM_Event_DAO_Event) {
     return;
   }
-  $postarr = agileware_civicrm_wp_events_make_postarray($objectRef);
+  $postarr = agileware_civicrm_wp_events_make_postarray($objectRef->ID);
   return wp_insert_post($postarr);
 }
 
@@ -43,7 +43,7 @@ function agileware_civicrm_wp_events_update($op, $objectName, $objectId, $object
     $my_post = $event_posts[0];
     $post_id = $my_post->ID;
   }
-  $postarr = agileware_civicrm_wp_events_make_postarray($objectRef);
+  $postarr = agileware_civicrm_wp_events_make_postarray($event_id);
   $postarr['ID'] = $post_id;
   return wp_insert_post($postarr);
 }
@@ -113,36 +113,37 @@ function agileware_civicrm_wp_events_insert_location($event_id) {
   }
 }
 
-function agileware_civicrm_wp_events_make_postarray($event) {
-  $event_id   = $event->id;
-  $summary    = $event->summary;
-  $start_date = $event->start_date;
-  $end_date   = $event->end_date;
-  $is_active  = $event->is_active;
-  $is_public  = $event->is_public;
-  $type_id    = $event->event_type_id;
-  $title      = $event->title;
+function agileware_civicrm_wp_events_make_postarray($event_id) {
+  $event = civicrm_api3('Event', 'getsingle', array('id' => $event_id));
+  if (empty($result['is_error'])) {
+    $summary    = $event['summary'];
+    $start_date = preg_replace('/\D/', '', $event['start_date']);
+    $end_date   = preg_replace('/\D/', '', $event['end_date']);
+    $is_active  = $event['is_active'];
+    $is_public  = $event['is_public'];
+    $type_id    = $event['event_type_id'];
+    $title      = $event['title'];
 
-  $type_name = agileware_civicrm_wp_events_insert_type($type_id);
-  $city = agileware_civicrm_wp_events_insert_location($event_id);
+    $type_name = agileware_civicrm_wp_events_insert_type($type_id);
+    $city = agileware_civicrm_wp_events_insert_location($event_id);
 
-  $postarr = array(
-    'post_title'   => $title,
-    'post_content' => '[civicrm component="event" id="' . $event_id . '" action="info" mode="live" hijack="1"]',
-    'post_type' => 'aa-event',
-    'post_status' => $is_active ? 'publish' : 'draft',
-    'post_excerpt' => $summary,
-    'tax_input' => array(
-      'aa-event-type' => array($type_name),
-      'aa-event-location' => array($city),
-    ),
-    'meta_input' => array(
-       'aa-event-id'      => $event_id,
-       'aa-event-start'   => $start_date,
-       'aa-event-end'     => $end_date,
-       'aa-event-public'  => ($is_public ? 'on' : ''),
-    ),
-  );
-  error_log(print_r($postarr, true));
-  return $postarr;
+    $postarr = array(
+      'post_title'   => $title,
+      'post_content' => '[civicrm component="event" id="' . $event_id . '" action="info" mode="live" hijack="1"]',
+      'post_type' => 'aa-event',
+      'post_status' => $is_active ? 'publish' : 'draft',
+      'post_excerpt' => $summary,
+      'tax_input' => array(
+        'aa-event-type' => array($type_name),
+        'aa-event-location' => array($city),
+      ),
+      'meta_input' => array(
+         'aa-event-id'      => $event_id,
+         'aa-event-start'   => $start_date,
+         'aa-event-end'     => $end_date,
+         'aa-event-public'  => ($is_public ? 'on' : ''),
+      ),
+    );
+    return $postarr;
+  }
 }
