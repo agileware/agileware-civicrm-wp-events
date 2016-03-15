@@ -48,7 +48,14 @@ function agileware_civicrm_wp_events_create_post_type() {
     'has_archive' => false,
     'show_ui' => true,
     'rewrite' => array('slug' => 'events'),
-    'supports' => array('title', 'editor', 'excerpt'),
+    'supports' => array(
+      'title',
+      'editor',
+      'excerpt',
+      'thumbnail',
+      'author',
+      'revisions'
+    ),
   ));
 }
 
@@ -72,5 +79,3 @@ function agileware_civicrm_wp_events_register_taxonomies() {
     'rewrite' => array('slug' => 'location'),
   ));
 }
-
-
