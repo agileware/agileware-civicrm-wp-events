@@ -45,7 +45,7 @@ function agileware_civicrm_wp_events_create_post_type() {
       'singular_name' => __('Event'),
     ),
     'public' => true,
-    'has_archive' => true,
+    'has_archive' => false,
     'show_ui' => true,
     'rewrite' => array('slug' => 'events'),
     'supports' => array('title', 'editor', 'excerpt'),
