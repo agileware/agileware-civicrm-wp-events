@@ -79,3 +79,13 @@ function agileware_civicrm_wp_events_register_taxonomies() {
     'rewrite' => array('slug' => 'location'),
   ));
 }
+
+// Custom Cornerstone element.
+function agileware_civicrm_wp_events_custom_elements() {
+  require_once 'agileware-civicrm-wp-events-cs-element-recent-events.php';
+  cornerstone_add_element('AA_Upcoming_Events');
+}
+add_action( 'cornerstone_load_elements', 'agileware_civicrm_wp_events_custom_elements' );
+
+// Define and register shortcodes.
+require_once 'agileware-civicrm-wp-events-shortcodes.php';
