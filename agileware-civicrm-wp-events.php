@@ -89,3 +89,35 @@ add_action( 'cornerstone_load_elements', 'agileware_civicrm_wp_events_custom_ele
 
 // Define and register shortcodes.
 require_once 'agileware-civicrm-wp-events-shortcodes.php';
+
+/**
+ * Add Event specific sidebars.
+ */
+function agileware_civicrm_wp_events_sidebars() {
+    register_sidebar( array(
+        'name' => __( 'Events sidebar'),
+        'id' => 'aa-events-sidebar',
+        'description' => __( 'Widgets in this area will be shown on Events.'),
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4 class="h-widget">',
+        'after_title'   => '</h4>',
+    ) );
+    register_sidebar( array(
+        'name' => __( 'Events (single) sidebar'),
+        'id' => 'aa-events-single-sidebar',
+        'description' => __( 'Widgets in this area will be shown on a single Event.'),
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4 class="h-widget">',
+        'after_title'   => '</h4>',
+    ) );
+}
+add_action( 'widgets_init', 'agileware_civicrm_wp_events_sidebars' );
+
+
+require_once(AGILEWARE_CIVICRM_WP_EVENTS_PATH . 'inc/widgets/class-aa-events-upcoming-widget.php');
+function agileware_civicrm_wp_events_register_widgets() {
+  register_widget('AA_Events_Upcoming_Widget');
+}
+add_action('widgets_init', 'agileware_civicrm_wp_events_register_widgets');
