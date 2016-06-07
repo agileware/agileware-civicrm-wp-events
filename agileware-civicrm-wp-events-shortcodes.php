@@ -42,7 +42,9 @@ function agileware_civicrm_wp_events_upcoming_events( $atts ) {
   $output = "<div {$id} class=\"{$class}{$orientation}\" {$style} {$data} data-fade=\"{$fade}\" >";
 
     $q = new WP_Query( array(
+      'meta_key'            => 'aa-event-start',
       'orderby'             => 'meta_value',
+      'order'               => 'ASC',
       'post_type'           => "{$type}",
       'posts_per_page'      => "{$count}",
       'offset'              => "{$offset}",
