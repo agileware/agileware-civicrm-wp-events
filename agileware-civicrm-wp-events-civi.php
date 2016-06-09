@@ -117,8 +117,8 @@ function agileware_civicrm_wp_events_make_postarray($event_id) {
   $event = civicrm_api3('Event', 'getsingle', array('id' => $event_id));
   if (empty($result['is_error'])) {
     $summary    = $event['summary'];
-    $start_date = preg_replace('/\D/', '', $event['start_date']);
-    $end_date   = preg_replace('/\D/', '', $event['end_date']);
+    $start_date = $event['start_date'];
+    $end_date   = $event['end_date'];
     $is_active  = $event['is_active'];
     $is_public  = $event['is_public'];
     $type_id    = $event['event_type_id'];
