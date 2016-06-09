@@ -73,7 +73,7 @@ class AA_Events_Upcoming_Widget extends WP_Widget {
       'meta_query' => array(
         array(
           'key' => 'aa-event-end',
-          'value' => date('YmdHis'),
+          'value' => date('Y-m-d H:i:s'),
           'compare' => '>='
         )
       ),

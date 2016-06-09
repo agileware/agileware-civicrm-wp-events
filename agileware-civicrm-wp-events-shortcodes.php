@@ -53,7 +53,7 @@ function agileware_civicrm_wp_events_upcoming_events( $atts ) {
       'meta_query' => array(
         array(
           'key' => 'aa-event-end',
-          'value' => date('YmdHis'),
+          'value' => date('Y-m-d H:i:s'),
           'compare' => '>='
         )
       )
