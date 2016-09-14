@@ -92,6 +92,41 @@ function agileware_civicrm_wp_events_insert_type($event_type_id) {
   }
 }
 
+//Function to find and insert the custom field tags
+function agileware_civicrm_wp_events_insert_tag($event_tag_id) {
+  if (empty($event_tag_id)) {
+    return;
+  }
+
+  //get the custom field to later get the entities inside
+  $tag_field = civicrm_api3('CustomField', 'getsingle', array(
+  'id' => "14", //this ID will need to be found through civicrm API Explorer, 
+                //execute 'CustomField -> get' and find the id of a result with a name/label that matches the
+                //name you specified
+  ));
+
+  //now we're getting a final result based on the field provided
+  //The field has the option_group_id specified in it, so we simply use that
+  //Since this particular field is a multi-choice, the values we give need to be set in an array
+  $tag_result = civicrm_api3('OptionValue', 'get', array(
+  'option_group_id' => $tag_field["option_group_id"],
+  'value' => array("IN" => $event_tag_id),
+  ));
+
+  // Insert the term if it does not already exist.
+  //in this case, it is checking each defined tag in the results to see if any of them exist
+  //within the given custom wordpress taxonomy
+  $tag_name = array();
+  foreach($tag_result["values"] as $ind_tag) {
+    $tag_name[] = $ind_tag['label'];
+    if (!term_exists($ind_tag['label'], 'aa-event-tag')) {
+      wp_insert_term($ind_tag['label'], 'aa-event-tag');
+    }
+  }
+    //when finished, return the final array with the value labels
+    return $tag_name;
+}
+
 function agileware_civicrm_wp_events_insert_location($event_id) {
   // Get the City from the Address from the Location Block for the Event.
   $chained_loc_result = civicrm_api3('Event', 'getsingle', array(
@@ -115,6 +150,7 @@ function agileware_civicrm_wp_events_insert_location($event_id) {
 
 function agileware_civicrm_wp_events_make_postarray($event_id) {
   $event = civicrm_api3('Event', 'getsingle', array('id' => $event_id));
+
   if (empty($result['is_error'])) {
     $summary    = $event['summary'];
     $start_date = $event['start_date'];
@@ -122,9 +158,15 @@ function agileware_civicrm_wp_events_make_postarray($event_id) {
     $is_active  = $event['is_active'];
     $is_public  = $event['is_public'];
     $type_id    = $event['event_type_id'];
+    //setting the tag_id to be used for the final result
+    //to find that, use civicrm API explorer
+    //Determine the id vis 'CustomField -> get'
+    //find the id of the entity with familiar values for 'name' or 'label'
+    $tag_id    = $event['custom_14'];
     $title      = $event['title'];
 
     $type_name = agileware_civicrm_wp_events_insert_type($type_id);
+    $tag_name = agileware_civicrm_wp_events_insert_tag($tag_id); //returns an array of tag value labels
     $city = agileware_civicrm_wp_events_insert_location($event_id);
 
     $postarr = array(
@@ -135,6 +177,7 @@ function agileware_civicrm_wp_events_make_postarray($event_id) {
       'post_excerpt' => $summary,
       'tax_input' => array(
         'aa-event-type' => array($type_name),
+        'aa-event-tag' => $tag_name, //already defined as an array
         'aa-event-location' => array($city),
       ),
       'meta_input' => array(

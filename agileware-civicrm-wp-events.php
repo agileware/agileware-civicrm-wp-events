@@ -78,6 +78,15 @@ function agileware_civicrm_wp_events_register_taxonomies() {
     'hierarchical' => false,
     'rewrite' => array('slug' => 'location'),
   ));
+  register_taxonomy('aa-event-tag', array('aa-event'), array(
+    'labels' => array(
+      'name' => __('Event Tags'),
+      'singular_name' => __('Event Tag'),
+    ),
+    'show_ui' => true,
+    'hierarchical' => false,
+    'rewrite' => array('slug' => 'tag'),
+  ));
 }
 
 // Custom Cornerstone element.
