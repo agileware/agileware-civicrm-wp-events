@@ -4,21 +4,21 @@ function agileware_civicrm_wp_events_admin_init() {
   agileware_civicrm_wp_events_add_meta_boxes();
 }
 
-function agileware_civicrm_wp_events_add_meta_boxes(){
+function agileware_civicrm_wp_events_add_meta_boxes() {
   add_meta_box('aa-event-civicrm', 'CiviCRM Event', '_agileware_civicrm_wp_aa_event_civicrm', 'aa-event', 'side');
 
   if ( function_exists('acf_add_local_field_group') ):
 
     acf_add_local_field_group(array (
       'key' => 'group_aa_event_details',
-      'title' => 'Event details',
+      'title' => 'Event schedule',
       'fields' => array (
         array (
           'key' => 'aa-event-start',
           'label' => 'Event start',
           'name' => 'aa-event-start',
           'type' => 'date_time_picker',
-          'instructions' => '',
+          'instructions' => 'Event start date and time synced with CiviCRM. Edit this in the CiviCRM event rather than here.',
           'required' => 0,
           'conditional_logic' => 0,
           'wrapper' => array (
@@ -33,13 +33,15 @@ function agileware_civicrm_wp_events_add_meta_boxes(){
           'picker' => 'select',
           'save_as_timestamp' => 'false',
           'get_as_timestamp' => 'false',
+          'readonly' => 1,
+          'disabled' => 1,
         ),
         array (
           'key' => 'aa-event-end',
           'label' => 'Event end',
           'name' => 'aa-event-end',
           'type' => 'date_time_picker',
-          'instructions' => '',
+          'instructions' => 'Event end date and time synced with CiviCRM. Edit this in the CiviCRM event rather than here.',
           'required' => 0,
           'conditional_logic' => 0,
           'wrapper' => array (
@@ -54,6 +56,8 @@ function agileware_civicrm_wp_events_add_meta_boxes(){
           'picker' => 'select',
           'save_as_timestamp' => 'false',
           'get_as_timestamp' => 'false',
+          'readonly' => 1,
+          'disabled' => 1,
         ),
       ),
       'location' => array (
@@ -81,10 +85,12 @@ function agileware_civicrm_wp_events_add_meta_boxes(){
 
 function agileware_civicrm_wp_events_save_post(){
   global $post;
+
+  if (empty($post)) {return;}
   $post_id = $post->ID;
 
-  update_post_meta($post_id, 'aa-event-public',  $_POST['aa-event-public']);
-  update_post_meta($post_id, 'aa-event-id',      $_POST['aa-event-id']);
+  @update_post_meta($post_id, 'aa-event-public',  $_POST['aa-event-public']);
+  @update_post_meta($post_id, 'aa-event-id',      $_POST['aa-event-id']);
 }
 
 function _agileware_civicrm_wp_aa_event_civicrm() {
