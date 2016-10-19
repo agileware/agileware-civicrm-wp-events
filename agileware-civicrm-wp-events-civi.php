@@ -272,49 +272,10 @@ function agileware_civicrm_wp_events_make_postarray($event_id) {
     $host_name = agileware_civicrm_wp_events_insert_host($host_id, $host_field_id); //returns an array of host value labels
     $city = agileware_civicrm_wp_events_insert_location($event_id);
 
-    //prepare the tags for display on the main page
-    $tag_name_content = '';
-    $tag_count = count($tag_name);
-    $tag_current_index=0;
 
-    if ($tag_count == 0)
-    {
-      $tag_name_content .= '<span class="event-tag no-tags">None</span>';
-    }
-    else {
-      foreach ($tag_name as $new_tag) {
-
-        //get the tag in wordpress by its name
-        $new_wp_tag=get_term_by('name', $new_tag, 'aa-event-tag');
-
-        //ensure the tag exists (the result will be false if no tag was found)
-        if ($new_wp_tag)
-        {
-          $wp_tag_slug = $new_wp_tag->slug;
-
-          $tag_name_content .= '<a href="/events/?fwp_event_tag=' . $wp_tag_slug
-                            . '" title="'
-                            . esc_attr( sprintf( __( "View all events tagged by: &ldquo;%s&rdquo;", '__x__' ), $new_tag ) )
-                            . '">';
-          $tag_name_content .= '<span class="event-tag">';
-          //$tag_name_content .= '<a href="#">' . $new_tag . '</a> ';
-          $tag_name_content .= $new_tag;
-          //add a comma if the current tag isn't the last one in the loop.
-          if ($tag_current_index != $tag_count - 1)
-            { $tag_name_content .= ', '; }
-          else
-            { $tag_name_content .= ' '; }
-          $tag_name_content .= '</span>';
-          $tag_name_content .= '</a>';
-
-          $tag_current_index+=1;
-        }
-      }
-    }
 
     //format the content so that the tags will display at the top of the page.
-    $final_post_content = '<h2 class="h6">Tags: </h2>' . $tag_name_content
-      . '[civicrm component="event" id="' . $event_id . '" action="info" mode="live" hijack="0"]';
+    $final_post_content = '[civicrm component="event" id="' . $event_id . '" action="info" mode="live" hijack="0"]';
 
       //determine the post status, whether the event is active and set as a public event
       $final_post_status = 'publish';
