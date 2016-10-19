@@ -1,9 +1,9 @@
 <?php /*
 --------------------------------------------------------------------------------
-Plugin Name: Agileware CiviCRM Events
+Plugin Name: CiviCRM WordPress Events
 Description: Create Wordpress events from CiviCRM events
-Version: 0.0.1
-Author: Vaibhav Sagar
+Version: 1.0.0
+Author: Agileware
 Author URI: http://www.agileware.com.au
 Plugin URI: https://bitbucket.com/agileware/agileware-civicrm-wp-events
 --------------------------------------------------------------------------------
@@ -31,9 +31,10 @@ add_action('civicrm_post', 'agileware_civicrm_wp_events_create', 10, 4);
 add_action('civicrm_post', 'agileware_civicrm_wp_events_update', 10, 4);
 add_action('civicrm_post', 'agileware_civicrm_wp_events_delete', 10, 4);
 
-wp_enqueue_style('agileware_civicrm_wp_events_css', plugins_url('agileware-civicrm-wp-events.css', __FILE__));
+
 
 function agileware_civicrm_wp_events_init() {
+  wp_enqueue_style('agileware_civicrm_wp_events_css', plugins_url('agileware-civicrm-wp-events.css', __FILE__));
   agileware_civicrm_wp_events_create_post_type();
   agileware_civicrm_wp_events_register_taxonomies();
 }
@@ -77,6 +78,24 @@ function agileware_civicrm_wp_events_register_taxonomies() {
     'show_ui' => true,
     'hierarchical' => false,
     'rewrite' => array('slug' => 'location'),
+  ));
+  register_taxonomy('aa-event-tag', array('aa-event'), array(
+    'labels' => array(
+      'name' => __('Event Tags'),
+      'singular_name' => __('Event Tag'),
+    ),
+    'show_ui' => true,
+    'hierarchical' => false,
+    'rewrite' => array('slug' => 'ev-tag'),
+  ));
+  register_taxonomy('aa-event-host', array('aa-event'), array(
+    'labels' => array(
+      'name' => __('Event Hosts'),
+      'singular_name' => __('Event Host'),
+    ),
+    'show_ui' => true,
+    'hierarchical' => false,
+    'rewrite' => array('slug' => 'host'),
   ));
 }
 
