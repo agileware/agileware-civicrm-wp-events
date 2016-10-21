@@ -9,7 +9,6 @@ function agileware_civicrm_wp_events_add_meta_boxes() {
 
   if ( function_exists('acf_add_local_field_group') ):
 
-
     acf_add_local_field_group(array (
       'key' => 'group_aa_event_details',
       'title' => 'Event schedule',
@@ -29,13 +28,11 @@ function agileware_civicrm_wp_events_add_meta_boxes() {
           ),
           'show_date' => 'true',
           'date_format' => 'yy-mm-dd',
-          'time_format' => 'hh:mm:ssA',
+          'time_format' => 'hh:mm A',
           'show_week_number' => 'false',
           'picker' => 'select',
           'save_as_timestamp' => 'false',
           'get_as_timestamp' => 'false',
-          'readonly' => 1,
-          'disabled' => 1,
         ),
         array (
           'key' => 'aa-event-end',
@@ -52,13 +49,11 @@ function agileware_civicrm_wp_events_add_meta_boxes() {
           ),
           'show_date' => 'true',
           'date_format' => 'yy-mm-dd',
-          'time_format' => 'hh:mm:ssA',
+          'time_format' => 'hh:mm A',
           'show_week_number' => 'false',
           'picker' => 'select',
           'save_as_timestamp' => 'false',
           'get_as_timestamp' => 'false',
-          'readonly' => 1,
-          'disabled' => 1,
         ),
       ),
       'location' => array (
