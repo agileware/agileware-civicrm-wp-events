@@ -129,8 +129,6 @@ function agileware_civicrm_wp_events_make_postarray($event_id) {
     $type_name = agileware_civicrm_wp_events_insert_type($type_id);
     $city = agileware_civicrm_wp_events_insert_location($event_id);
 
-
-
     //format the content so that the tags will display at the top of the page.
     $final_post_content = '[civicrm component="event" id="' . $event_id . '" action="info" mode="live" hijack="0"]';
 
