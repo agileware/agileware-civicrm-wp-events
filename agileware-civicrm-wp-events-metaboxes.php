@@ -98,6 +98,22 @@ function _agileware_civicrm_wp_aa_event_civicrm() {
   $custom = get_post_custom($post->ID);
   $mb_id = $custom['aa-event-id'][0];
   $mb_public = $custom['aa-event-public'][0];
+
+
+  if(!empty($mb_id)){
+
+    $home_url = home_url();
+    $civicrm_event_url = add_query_arg( array(
+    'page' => urlencode('CiviCRM'),
+    'q' => urlencode('civicrm/event/manage/settings'),
+    'reset'=>urlencode('1'),
+    'action'=>urlencode('update'),
+    'id'=>urlencode($mb_id),
+  ), $home_url.'/wp-admin/admin.php' );
+  }
+
+
+
   ?>
     <div class="wrap">
       <p>
@@ -109,6 +125,13 @@ function _agileware_civicrm_wp_aa_event_civicrm() {
       <input type="checkbox" name="aa-event-public" id="aa-event-public" <?php if ($mb_public=='on'){echo 'checked';}?>></input>
       <label for="aa-event-public">Public</label>
       <p id="aa-event-civicrm-help">CiviCRM event specific fields.</p>
+
+      <?php
+      if(isset($civicrm_event_url)){
+          echo '<a href="'.$civicrm_event_url.'">Edit the event in CiviCRM</a>';
+      }
+      ?>
+
     </div>
   <?php
 }
