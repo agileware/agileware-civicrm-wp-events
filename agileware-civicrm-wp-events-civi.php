@@ -78,17 +78,19 @@ function agileware_civicrm_wp_events_insert_type($event_type_id) {
   if (empty($event_type_id)) {
     return;
   }
-  $type_result = civicrm_api3('OptionValue', 'getsingle', array(
-    'option_group_id' => 'event_type',
-    'value' => $event_type_id,
-  ));
-  // Insert the term if it does not already exist.
-  if (empty($type_result['is_error'])) {
-    $type_name = $type_result['name'];
+  try {
+    $type_name = civicrm_api3('OptionValue', 'getvalue', array(
+                   'option_group_id' => 'event_type',
+                   'value' => $event_type_id,
+                   'return' => 'label',
+                 ));
+    // Insert the term if it does not already exist.
     if (!term_exists($type_name, 'aa-event-type')) {
       wp_insert_term($type_name, 'aa-event-type');
     }
     return $type_name;
+  }
+  catch (Exception $e) {
   }
 }
 
@@ -127,6 +129,7 @@ function agileware_civicrm_wp_events_make_postarray($event_id) {
     $title      = $event['title'];
 
     $type_name = agileware_civicrm_wp_events_insert_type($type_id);
+
     $city = agileware_civicrm_wp_events_insert_location($event_id);
 
     //format the content so that the tags will display at the top of the page.
