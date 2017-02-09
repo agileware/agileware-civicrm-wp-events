@@ -37,6 +37,7 @@ function agileware_civicrm_wp_events_init() {
   wp_enqueue_style('agileware_civicrm_wp_events_css', plugins_url('agileware-civicrm-wp-events.css', __FILE__));
   agileware_civicrm_wp_events_create_post_type();
   agileware_civicrm_wp_events_register_taxonomies();
+  flush_rewrite_rules(FALSE);
 }
 
 function agileware_civicrm_wp_events_create_post_type() {
