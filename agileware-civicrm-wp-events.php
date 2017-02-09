@@ -79,24 +79,6 @@ function agileware_civicrm_wp_events_register_taxonomies() {
     'hierarchical' => false,
     'rewrite' => array('slug' => 'location'),
   ));
-  register_taxonomy('aa-event-tag', array('aa-event'), array(
-    'labels' => array(
-      'name' => __('Event Tags'),
-      'singular_name' => __('Event Tag'),
-    ),
-    'show_ui' => true,
-    'hierarchical' => false,
-    'rewrite' => array('slug' => 'ev-tag'),
-  ));
-  register_taxonomy('aa-event-host', array('aa-event'), array(
-    'labels' => array(
-      'name' => __('Event Hosts'),
-      'singular_name' => __('Event Host'),
-    ),
-    'show_ui' => true,
-    'hierarchical' => false,
-    'rewrite' => array('slug' => 'host'),
-  ));
 }
 
 // Custom Cornerstone element.
@@ -140,3 +122,52 @@ function agileware_civicrm_wp_events_register_widgets() {
   register_widget('AA_Events_Upcoming_Widget');
 }
 add_action('widgets_init', 'agileware_civicrm_wp_events_register_widgets');
+
+
+/**
+ * Initial setup and constants.
+ */
+
+/**
+ * Enable additional supported features for specific post types.
+ */
+function agileapp_init() {
+  // Enable additional supported features for specific post types.
+  add_post_type_support( 'page', 'excerpt' );
+}
+// Fires after WordPress has finished loading but before any headers are sent.
+add_action( 'init', 'agileapp_init' );
+
+/**
+ * Implementation of facetwp_is_main_query.
+ * @see https://facetwp.com/documentation/facetwp_is_main_query/
+ */
+function agileapp_facetwp_is_main_query( $is_main_query, $query ) {
+    if ( isset( $query->query_vars['facetwp'] ) ) {
+        $is_main_query = true;
+    }
+    return $is_main_query;
+}
+add_filter( 'facetwp_is_main_query', 'agileapp_facetwp_is_main_query', 10, 2 );
+
+// Enable shortcodes for the Text widget.
+add_filter('widget_text', 'do_shortcode');
+
+
+
+/**
+ * FacetWP overrides.
+ */
+function agileapp_facetwp_index_row( $params, $class ) {
+    switch ($params['facet_name']) {
+      case 'event_date':
+        // Save date in "MM, YYYY" format.
+        $raw_value = $params['facet_value'];
+        $params['facet_display_value'] = date('F, Y', strtotime($raw_value));
+        $params['facet_value'] = $params['facet_display_value'];
+        // d($params['facet_value']);
+        break;
+    }
+    return $params;
+}
+add_filter('facetwp_index_row', 'agileapp_facetwp_index_row', 10, 2);
