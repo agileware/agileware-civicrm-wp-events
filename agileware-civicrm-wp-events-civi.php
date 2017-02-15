@@ -14,6 +14,7 @@ function agileware_civicrm_wp_events_create($op, $objectName, $objectId, $object
     return;
   }
   $postarr = agileware_civicrm_wp_events_make_postarray($objectRef->id);
+
   return wp_insert_post($postarr);
 }
 
@@ -120,7 +121,8 @@ function agileware_civicrm_wp_events_make_postarray($event_id) {
 
   if (empty($result['is_error'])) {
 
-    $summary    = $event['summary'];
+    //bug fix #24949, the excerpt can not be undefined or null if no summary is fiiled out.
+    $summary    = ( empty($event['summary']) ) ? '': $event['summary'];
     $start_date = $event['start_date'];
     $end_date   = $event['end_date'];
     $is_active  = $event['is_active'];
@@ -161,6 +163,7 @@ function agileware_civicrm_wp_events_make_postarray($event_id) {
          'aa-event-public'  => ($is_public ? 'on' : ''),
       ),
     );
+
     return $postarr;
   }
 }
