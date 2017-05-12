@@ -66,13 +66,13 @@ class AA_Events_Upcoming_Widget extends WP_Widget {
       'post_type' => 'aa-event',
       'post_status' => 'publish',
       'orderby' => 'meta_value',
-      'meta_key' => 'aa-event-end',
+      'meta_key' => 'aa-event-start',
       'order' => 'ASC',
       'posts_per_page' => $number,
       'facetwp' => true,
       'meta_query' => array(
         array(
-          'key' => 'aa-event-end',
+          'key' => 'aa-event-start',
           'value' => date('Y-m-d H:i:s'),
           'compare' => '>='
         )
