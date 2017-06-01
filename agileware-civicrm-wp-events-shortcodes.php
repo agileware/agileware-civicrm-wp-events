@@ -73,17 +73,17 @@ function agileware_civicrm_wp_events_upcoming_events( $atts ) {
 
       $event_start  = date('j F Y', strtotime(get_post_meta( get_the_ID(), 'aa-event-start', true )));
 
-	    $output .= '<a class="x-recent-post' . $count . ' ' . $image_output_class . '" href="' . get_permalink( get_the_ID() ) . '" title="' . esc_attr( sprintf( __( 'Permalink to: "%s"', 'cornerstone', the_title_attribute( 'echo=0' ) ) ) . '">'
-	                                                                                                                                                     . '<article id="post-' . get_the_ID() . '" class="' . implode( ' ', get_post_class() ) . '">'
-	                                                                                                                                                     . '<div class="entry-wrap">'
-	                                                                                                                                                     . $image_output
-	                                                                                                                                                     . '<div class="x-recent-posts-content">'
-	                                                                                                                                                     . '<h3 class="h-recent-posts">' . get_the_title() . '</h3>'
-	                                                                                                                                                     . '<span class="x-recent-posts-date">' . $event_start . '</span>'
-	                                                                                                                                                     . '</div>'
-	                                                                                                                                                     . '</div>'
-	                                                                                                                                                     . '</article>'
-	                                                                                                                                                     . '</a>' );
+        $output .= '<a class="x-recent-post' . $count . ' ' . $image_output_class . '" href="' . get_permalink(get_the_ID()) . '" title="' . esc_attr(sprintf(__('Permalink to: "%s"', 'cornerstone'), the_title_attribute('echo=0'))) . '">'
+            . '<article id="post-' . get_the_ID() . '" class="' . implode(' ', get_post_class()) . '">'
+            . '<div class="entry-wrap">'
+            . $image_output
+            . '<div class="x-recent-posts-content">'
+            . '<h3 class="h-recent-posts">' . get_the_title() . '</h3>'
+            . '<span class="x-recent-posts-date">' . $event_start . '</span>'
+            . '</div>'
+            . '</div>'
+            . '</article>'
+            . '</a>';
 
     endwhile; endif; wp_reset_postdata();
 
