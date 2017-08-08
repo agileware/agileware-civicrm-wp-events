@@ -21,3 +21,9 @@ Installation
 1. Ensure dependencies are met.
 2. Copy the contents of this repository into a folder in the `wp-content/plugins/` directory.
 3. Activate the plugin in Wordpress.
+
+
+Configuration and integration
+==========================
+
+See the Wiki page for configuration and integration with the website, https://wiki.agileware.com.au/x/YQCS
