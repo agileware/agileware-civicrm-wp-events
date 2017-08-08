@@ -9,6 +9,7 @@ Dependencies
 These plugins are required and must be installed and activated before installing the Agileware CiviCRM WP Events plugin.
 
 Required plugins:
+
 1. Advanced Custom Fields PRO
 2. FacetWP
 3. SearchWP
