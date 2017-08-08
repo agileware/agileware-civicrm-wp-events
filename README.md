@@ -1,7 +1,22 @@
 Agileware CiviCRM WP Events
 ==========================
 
-This plugin provides a custom event post type and one-way integration from CiviCRM. To install:
+This plugin provides a custom event post type and one-way integration from CiviCRM.
 
-1. Copy the contents of this repository into a folder in the `wp-content/plugins/` directory.
-2. Activate the plugin in Wordpress.
+Dependencies
+==========================
+
+These plugins are required and must be installed and activated before installing the Agileware CiviCRM WP Events plugin.
+
+Required plugins:
+1. Advanced Custom Fields PRO
+2. FacetWP
+3. SearchWP
+4. CiviCRM
+
+Installation
+==========================
+
+1. Ensure dependencies are met.
+2. Copy the contents of this repository into a folder in the `wp-content/plugins/` directory.
+3. Activate the plugin in Wordpress.
