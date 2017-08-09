@@ -108,8 +108,8 @@ function agileware_civicrm_wp_events_insert_location($event_id) {
     ));
     if (empty($address_result['is_error'])) {
       $city = $address_result['city'];
-      if (!term_exists($city, 'aa-event-location')) {
-        wp_insert_term($city, 'aa-event-location');
+      if (!term_exists($city, 'aa_event_location')) {
+        wp_insert_term($city, 'aa_event_location');
       }
       return $city;
     }
@@ -154,12 +154,12 @@ function agileware_civicrm_wp_events_make_postarray($event_id) {
       'post_excerpt' => $summary,
       'tax_input' => array(
         'aa-event-type' => array($type_name),
-        'aa-event-location' => array($city),
+        'aa_event_location' => array($city),
       ),
       'meta_input' => array(
          'aa-event-id'      => $event_id,
-         'aa-event-start'   => $start_date,
-         'aa-event-end'     => $end_date,
+         'aa_event_start'   => $start_date,
+         'aa_event_end'     => $end_date,
          'aa-event-public'  => ($is_public ? 'on' : ''),
       ),
     );

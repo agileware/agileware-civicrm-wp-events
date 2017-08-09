@@ -66,13 +66,13 @@ class AA_Events_Upcoming_Widget extends WP_Widget {
       'post_type' => 'aa-event',
       'post_status' => 'publish',
       'orderby' => 'meta_value',
-      'meta_key' => 'aa-event-start',
+      'meta_key' => 'aa_event_start',
       'order' => 'ASC',
       'posts_per_page' => $number,
       'facetwp' => true,
       'meta_query' => array(
         array(
-          'key' => 'aa-event-start',
+          'key' => 'aa_event_start',
           'value' => date('Y-m-d H:i:s'),
           'compare' => '>='
         )
@@ -91,7 +91,7 @@ class AA_Events_Upcoming_Widget extends WP_Widget {
 				<a href="<?php the_permalink(); ?>"><?php get_the_title() ? the_title() : the_ID(); ?></a>
 			<?php if ( $show_date ) : ?>
         <?php
-          $event_start  = date('j F Y', strtotime(get_post_meta( get_the_ID(), 'aa-event-start', true )));
+          $event_start  = date('j F Y', strtotime(get_post_meta( get_the_ID(), 'aa_event_start', true )));
         ?>
 				<span class="post-date"><?php echo $event_start; ?></span>
 			<?php endif; ?>

@@ -43,7 +43,7 @@ function agileware_civicrm_wp_events_upcoming_events($atts)
     $output = "<div {$id} class=\"{$class}{$orientation}\" {$style} {$data} data-fade=\"{$fade}\" >";
 
     $q = new WP_Query(array(
-        'meta_key' => 'aa-event-start',
+        'meta_key' => 'aa_event_start',
         'orderby' => 'meta_value',
         'order' => 'ASC',
         'post_type' => "{$type}",
@@ -53,7 +53,7 @@ function agileware_civicrm_wp_events_upcoming_events($atts)
         'ignore_sticky_posts' => $no_sticky,
         'meta_query' => array(
             array(
-                'key' => 'aa-event-end',
+                'key' => 'aa_event_end',
                 'value' => date('Y-m-d H:i:s'),
                 'compare' => '>='
             )
@@ -72,7 +72,7 @@ function agileware_civicrm_wp_events_upcoming_events($atts)
             $image_output_class = 'with-image';
         }
 
-        $event_start = date('j F Y', strtotime(get_post_meta(get_the_ID(), 'aa-event-start', true)));
+        $event_start = date('j F Y', strtotime(get_post_meta(get_the_ID(), 'aa_event_start', true)));
 
         $output .= '<a class="x-recent-post' . $count . ' ' . $image_output_class . '" href="' . get_permalink(get_the_ID()) . '" title="' . esc_attr(sprintf(__('Permalink to: "%s"', 'cornerstone'), the_title_attribute('echo=0'))) . '">'
             . '<article id="post-' . get_the_ID() . '" class="' . implode(' ', get_post_class()) . '">'

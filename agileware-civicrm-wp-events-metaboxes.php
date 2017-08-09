@@ -14,9 +14,9 @@ function agileware_civicrm_wp_events_add_meta_boxes() {
       'title' => 'Event schedule',
       'fields' => array (
         array (
-          'key' => 'aa-event-start',
+          'key' => 'aa_event_start',
           'label' => 'Event start',
-          'name' => 'aa-event-start',
+          'name' => 'aa_event_start',
           'type' => 'date_time_picker',
           'instructions' => 'Event start date and time synced with CiviCRM. Edit this in the CiviCRM event rather than here.',
           'required' => 0,
@@ -35,9 +35,9 @@ function agileware_civicrm_wp_events_add_meta_boxes() {
           'get_as_timestamp' => 'false',
         ),
         array (
-          'key' => 'aa-event-end',
+          'key' => 'aa_event_end',
           'label' => 'Event end',
-          'name' => 'aa-event-end',
+          'name' => 'aa_event_end',
           'type' => 'date_time_picker',
           'instructions' => 'Event end date and time synced with CiviCRM. Edit this in the CiviCRM event rather than here.',
           'required' => 0,

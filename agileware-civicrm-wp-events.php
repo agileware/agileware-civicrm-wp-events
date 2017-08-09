@@ -71,7 +71,7 @@ function agileware_civicrm_wp_events_register_taxonomies() {
     'hierarchical' => false,
     'rewrite' => array('slug' => 'type'),
   ));
-  register_taxonomy('aa-event-location', array('aa-event'), array(
+  register_taxonomy('aa_event_location', array('aa-event'), array(
     'labels' => array(
       'name' => __('Event Locations'),
       'singular_name' => __('Event Location'),
@@ -102,7 +102,7 @@ function agileware_civicrm_wp_events_sidebars() {
         'description' => __( 'Widgets in this area will be shown on Events.'),
         'before_widget' => '<div id="%1$s" class="widget %2$s">',
         'after_widget'  => '</div>',
-        'before_title'  => '<h4 class="h-widget">',
+        'before_title'  => '<h4 class="widget-title">',
         'after_title'   => '</h4>',
     ) );
     register_sidebar( array(
@@ -111,7 +111,7 @@ function agileware_civicrm_wp_events_sidebars() {
         'description' => __( 'Widgets in this area will be shown on a single Event.'),
         'before_widget' => '<div id="%1$s" class="widget %2$s">',
         'after_widget'  => '</div>',
-        'before_title'  => '<h4 class="h-widget">',
+        'before_title'  => '<h4 class="widget-title">',
         'after_title'   => '</h4>',
     ) );
 }
