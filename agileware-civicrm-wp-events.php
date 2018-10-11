@@ -5,8 +5,8 @@ Description: Create Wordpress events from CiviCRM events
 Version: 1.0.2
 Author: Agileware
 Author URI: http://www.agileware.com.au
-Plugin URI: https://bitbucket.com/agileware/agileware-civicrm-wp-events
-Bitbucket Plugin URI: https://bitbucket.com/agileware/agileware-civicrm-wp-events
+Plugin URI: https://github.com/agileware/agileware-civicrm-wp-events
+GitHub Plugin URI: https://github.com/agileware/agileware-civicrm-wp-events
 --------------------------------------------------------------------------------
 */
 
