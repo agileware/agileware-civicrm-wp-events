@@ -6,6 +6,7 @@ Version: 1.0.2
 Author: Agileware
 Author URI: http://www.agileware.com.au
 Plugin URI: https://bitbucket.com/agileware/agileware-civicrm-wp-events
+Bitbucket Plugin URI: https://bitbucket.com/agileware/agileware-civicrm-wp-events
 --------------------------------------------------------------------------------
 */
 
